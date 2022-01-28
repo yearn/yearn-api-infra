@@ -61,13 +61,13 @@ Navigate to the [Secrets Manager](https://console.aws.amazon.com/secretsmanager/
 Build and upload your first container to your ECR repository:
 
 ```
-aws --profile aws-profile-name ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 311068046057.dkr.ecr.us-east-1.amazonaws.com
+aws --profile aws-profile-name ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <aws account id>.dkr.ecr.us-east-1.amazonaws.com
 docker pull amazon/amazon-ecs-sample
-docker tag amazon/amazon-ecs-sample 311068046057.dkr.ecr.us-east-1.amazonaws.com/yearn-api-repo:latest
-docker push 311068046057.dkr.ecr.us-east-1.amazonaws.com/yearn-api-repo:latest
+docker tag amazon/amazon-ecs-sample <aws account id>.dkr.ecr.us-east-1.amazonaws.com/yearn-api-repo:latest
+docker push <aws account id>.dkr.ecr.us-east-1.amazonaws.com/yearn-api-repo:latest
 ```
 
-**Note:** You may need to change the account id in the snippet above if you are deploying to a different account.
+**Note:** Add your account id in the snippet above
 
 #### Deploy the rest of the infrastructure
 
