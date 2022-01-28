@@ -21,6 +21,7 @@ Notable components are:
 2. The service is hosted on Fargate containers running in multiple availability zones for high availability
 3. An application load balancer spreads out incoming traffic amongst multiple containers running the application
 4. An ECR container repository stores docker containers containing different versions of the application
+5. A Secrets manager that stores API keys, passwords, etc
 
 ## Setting up the infrastructure
 
