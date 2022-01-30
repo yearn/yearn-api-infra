@@ -79,6 +79,31 @@ export class YearnAPIECSStack extends Stack {
       fargateService.service.taskDefinition.obtainExecutionRole()
     );
 
+    fargateService.service.taskDefinition.addContainer("MetricsCollector", {
+      image: ecs.ContainerImage.fromAsset("docker/grafana"),
+      containerName: "MetricsCollector",
+      logging: new ecs.AwsLogDriver({
+        streamPrefix: "yearn-api-metrics",
+        logGroup: servicesStack.logGroup,
+        mode: ecs.AwsLogDriverMode.NON_BLOCKING,
+      }),
+      secrets: {
+        REMOTE_WRITE:  ecs.Secret.fromSecretsManager(
+          servicesStack.secretsManager,
+          "REMOTE_WRITE"
+        ),
+        REMOTE_WRITE_USERNAME: ecs.Secret.fromSecretsManager(
+          servicesStack.secretsManager,
+          "REMOTE_WRITE_USERNAME"
+        ),
+        REMOTE_WRITE_PASSWORD: ecs.Secret.fromSecretsManager(
+          servicesStack.secretsManager,
+          "REMOTE_WRITE_PASSWORD"
+        ),
+      },
+    }
+    );
+
     fargateService.service.connections.allowTo(
       servicesStack.redisCluster,
       Port.tcp(6379),

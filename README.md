@@ -25,6 +25,82 @@ Notable components are:
 
 ## Setting up the infrastructure
 
+## Creating a new AWS user for CDK
+
+It is best to create a new user when working with CDK instead of using a existing user with Admin or Root privileges.
+
+Start by creating a new IAM policy which allows you to work with AWS CDK:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "cloudformation:*"
+            ],
+            "Resource": "*",
+            "Effect": "Allow"
+        },
+        {
+            "Condition": {
+                "ForAnyValue:StringEquals": {
+                    "aws:CalledVia": [
+                        "cloudformation.amazonaws.com"
+                    ]
+                }
+            },
+            "Action": "*",
+            "Resource": "*",
+            "Effect": "Allow"
+        },
+        {
+            "Action": "s3:*",
+            "Resource": "arn:aws:s3:::cdktoolkit-stagingbucket-*",
+            "Effect": "Allow"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ssm:GetParameter"
+            ],
+            "Resource": "arn:aws:ssm:*:*:parameter/cdk-bootstrap/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ecr:BatchCheckLayerAvailability",
+                "ecr:BatchGetImage",
+                "ecr:CompleteLayerUpload",
+                "ecr:DescribeImages",
+                "ecr:GetDownloadUrlForLayer",
+                "ecr:GetRepositoryPolicy",
+                "ecr:InitiateLayerUpload",
+                "ecr:ListImages",
+                "ecr:PutImage",
+                "ecr:UploadLayerPart",
+                "ecr:PutImageScanningConfiguration"
+            ],
+            "Resource": "arn:aws:ecr:*:<aws account id>:repository/aws-cdk/*"
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "ecr:DescribeRepositories",
+                "ecr:CreateRepository",
+                "ecr:DescribeImages"
+            ],
+            "Resource": "arn:aws:ecr:*:<aws account id>:*"
+        }
+    ]
+}
+```
+
+Then create a new IAM user and attach your new policy to this user.
+
+**WARNING**:
+Any user with this policy have a lot of privileges on AWS, so only add this policy to very trusted users. Once the initial deploy of the infrastructure is complete, consider removing this policy from all users.
+
 ### Bootstrapping
 
 Follow the steps to bootstrap your AWS Account to work with AWS CDK:
@@ -53,10 +129,13 @@ cdk --profile "aws-profile-name" deploy YearnAPIStack/YearnAPIServicesStack
 
 Navigate to the [Secrets Manager](https://console.aws.amazon.com/secretsmanager/home?region=us-east-1#!/listSecrets/) and add the following secrets:
 
-- WEB3_HTTP_PROVIDER
-- WEB3_HTTP_PROVIDER_FTM_PASSWORD
-- WEB3_HTTP_PROVIDER_FTM_USERNAME
-- WEB3_HTTP_PROVIDER_FTM_URL
+- `WEB3_HTTP_PROVIDER` - 
+- `WEB3_HTTP_PROVIDER_FTM_PASSWORD` - 
+- `WEB3_HTTP_PROVIDER_FTM_USERNAME` - 
+- `WEB3_HTTP_PROVIDER_FTM_URL` - 
+- `REMOTE_WRITE` - Prometheus ingestion URL
+- `REMOTE_WRITE_USERNAME` - Prometheus ingestion username
+- `REMOTE_WRITE_PASSWORD` - Prometheus ingestion password
 
 Build and upload your first container to your ECR repository:
 

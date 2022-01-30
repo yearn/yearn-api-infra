@@ -35,6 +35,9 @@ export class YearnAPIServicesStack extends Stack {
           WEB3_HTTP_PROVIDER_FTM_URL: "",
           WEB3_HTTP_PROVIDER_FTM_USERNAME: "",
           WEB3_HTTP_PROVIDER_FTM_PASSWORD: "",
+          REMOTE_WRITE: "",
+          REMOTE_WRITE_USERNAME: "",
+          REMOTE_WRITE_PASSWORD: "",
         }),
         // This is a require property, but we won't actually use it.
         generateStringKey: "_",
