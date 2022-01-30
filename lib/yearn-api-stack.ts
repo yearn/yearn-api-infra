@@ -54,6 +54,7 @@ export class YearnAPIECSStack extends Stack {
               servicesStack.redisCluster.connectionString,
             PORT: "80",
             FASTIFY_ADDRESS: "0.0.0.0",
+            REQUEST_TIMEOUT: "1000",
           },
           secrets: {
             WEB3_HTTP_PROVIDER: ecs.Secret.fromSecretsManager(
