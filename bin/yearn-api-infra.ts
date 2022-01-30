@@ -8,6 +8,11 @@ import { Construct, StackProps } from "@aws-cdk/core";
 export class YearnAPIStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
+    const certArn = process.env.CERTIFICATE_ARN;
+    if (!certArn) {
+      throw new Error("CERTIFICATE_ARN not set. Please set it in the environment.");
+    }
+
     const servicesStack = new YearnAPIServicesStack(
       this,
       "YearnAPIServicesStack",
@@ -16,6 +21,7 @@ export class YearnAPIStack extends cdk.Stack {
     new YearnAPIECSStack(this, "YearnAPIECSStack", {
       ...props,
       servicesStack,
+      certArn,
     });
   }
 }

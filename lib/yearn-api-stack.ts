@@ -4,10 +4,11 @@ import { YearnAPIServicesStack } from "./services-stack";
 import { ApplicationLoadBalancedFargateService } from "@aws-cdk/aws-ecs-patterns";
 import * as ecs from "@aws-cdk/aws-ecs";
 import { Port } from "@aws-cdk/aws-ec2";
-import { setFlagsFromString } from "v8";
+import { Certificate } from '@aws-cdk/aws-certificatemanager';
 
 export interface YearnAPIECSStackProps extends StackProps {
   readonly servicesStack: YearnAPIServicesStack;
+  readonly certArn: string;
 }
 
 export class YearnAPIECSStack extends Stack {
@@ -22,6 +23,8 @@ export class YearnAPIECSStack extends Stack {
       enableFargateCapacityProviders: true,
     });
 
+    const cert = Certificate.fromCertificateArn(this, "Certificate", props.certArn);
+
     const fargateService = new ApplicationLoadBalancedFargateService(
       this,
       "YearnAPIFargateService",
@@ -31,6 +34,8 @@ export class YearnAPIECSStack extends Stack {
         cpu: 512,
         serviceName: "YearnAPIService",
         desiredCount: 4,
+        certificate: cert,
+        redirectHTTP: true,
         taskImageOptions: {
           image: ecs.ContainerImage.fromEcrRepository(
             servicesStack.repository,

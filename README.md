@@ -122,8 +122,10 @@ Install all the dependencies: `npm install`.
 Create all the support services used by the application:
 
 ```
-cdk --profile "aws-profile-name" deploy YearnAPIStack/YearnAPIServicesStack
+CERTIFICATE_ARN="arn:aws:acm:us-east-1:11111111111:certificate/4939e960-18e2-3223-8783-d0bca0c636zq" cdk --profile "aws-profile-name" deploy YearnAPIStack/YearnAPIServicesStack
 ```
+
+**NOTE**: `CERTIFICATE_ARN` should be the ARN of the AWS Managed Certificate for the domain this service will be hosted on
 
 #### Update Secrets and Initial Container
 
