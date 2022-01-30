@@ -152,7 +152,7 @@ docker push <aws account id>.dkr.ecr.us-east-1.amazonaws.com/yearn-api-repo:late
 
 #### Deploy the rest of the infrastructure
 
-`cdk --profile "aws-profile-name" deploy --all`
+`CERTIFICATE_ARN="arn:aws:acm:us-east-1:11111111111:certificate/4939e960-18e2-3223-8783-d0bca0c636zq" cdk --profile "aws-profile-name" deploy --all`
 
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
