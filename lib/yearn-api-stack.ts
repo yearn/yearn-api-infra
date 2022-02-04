@@ -33,7 +33,7 @@ export class YearnAPIECSStack extends Stack {
         memoryLimitMiB: 1024,
         cpu: 512,
         serviceName: "YearnAPIService",
-        desiredCount: 4,
+        desiredCount: 3,
         certificate: cert,
         redirectHTTP: true,
         taskImageOptions: {
