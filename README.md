@@ -138,6 +138,7 @@ Navigate to the [Secrets Manager](https://console.aws.amazon.com/secretsmanager/
 - `REMOTE_WRITE` - Prometheus ingestion URL
 - `REMOTE_WRITE_USERNAME` - Prometheus ingestion username
 - `REMOTE_WRITE_PASSWORD` - Prometheus ingestion password
+- `SENTRY_DNS` - Sentry DNS to log exceptions to
 
 Build and upload your first container to your ECR repository:
 

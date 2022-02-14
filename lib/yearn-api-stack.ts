@@ -54,6 +54,7 @@ export class YearnAPIECSStack extends Stack {
               servicesStack.redisCluster.connectionString,
             PORT: "80",
             FASTIFY_ADDRESS: "0.0.0.0",
+            NODE_ENV: "production",
             REQUEST_TIMEOUT: "1000",
           },
           secrets: {
@@ -72,6 +73,10 @@ export class YearnAPIECSStack extends Stack {
             WEB3_HTTP_PROVIDER_FTM_PASSWORD: ecs.Secret.fromSecretsManager(
               servicesStack.secretsManager,
               "WEB3_HTTP_PROVIDER_FTM_PASSWORD"
+            ),
+            SENTRY_DSN: ecs.Secret.fromSecretsManager(
+              servicesStack.secretsManager,
+              "SENTRY_DSN"
             ),
           },
         },
