@@ -55,6 +55,7 @@ export class YearnAPIECSStack extends Stack {
             PORT: "80",
             FASTIFY_ADDRESS: "0.0.0.0",
             NODE_ENV: "production",
+            REQUEST_TIMEOUT: "1000",
           },
           secrets: {
             WEB3_HTTP_PROVIDER: ecs.Secret.fromSecretsManager(
