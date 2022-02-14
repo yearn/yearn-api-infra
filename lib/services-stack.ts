@@ -38,6 +38,7 @@ export class YearnAPIServicesStack extends Stack {
           REMOTE_WRITE: "",
           REMOTE_WRITE_USERNAME: "",
           REMOTE_WRITE_PASSWORD: "",
+          SENTRY_DSN: "",
         }),
         // This is a require property, but we won't actually use it.
         generateStringKey: "_",

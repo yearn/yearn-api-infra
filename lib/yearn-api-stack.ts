@@ -33,7 +33,7 @@ export class YearnAPIECSStack extends Stack {
         memoryLimitMiB: 1024,
         cpu: 512,
         serviceName: "YearnAPIService",
-        desiredCount: 4,
+        desiredCount: 3,
         certificate: cert,
         redirectHTTP: true,
         taskImageOptions: {
@@ -54,6 +54,7 @@ export class YearnAPIECSStack extends Stack {
               servicesStack.redisCluster.connectionString,
             PORT: "80",
             FASTIFY_ADDRESS: "0.0.0.0",
+            NODE_ENV: "production",
           },
           secrets: {
             WEB3_HTTP_PROVIDER: ecs.Secret.fromSecretsManager(
@@ -71,6 +72,10 @@ export class YearnAPIECSStack extends Stack {
             WEB3_HTTP_PROVIDER_FTM_PASSWORD: ecs.Secret.fromSecretsManager(
               servicesStack.secretsManager,
               "WEB3_HTTP_PROVIDER_FTM_PASSWORD"
+            ),
+            SENTRY_DSN: ecs.Secret.fromSecretsManager(
+              servicesStack.secretsManager,
+              "SENTRY_DSN"
             ),
           },
         },
