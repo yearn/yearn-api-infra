@@ -74,6 +74,10 @@ export class YearnAPIECSStack extends Stack {
               servicesStack.secretsManager,
               "WEB3_HTTP_PROVIDER_FTM_PASSWORD"
             ),
+            WEB3_HTTP_PROVIDER_ARB: ecs.Secret.fromSecretsManager(
+              servicesStack.secretsManager,
+              "WEB3_HTTP_PROVIDER_ARB"
+            ),
             SENTRY_DSN: ecs.Secret.fromSecretsManager(
               servicesStack.secretsManager,
               "SENTRY_DSN"
