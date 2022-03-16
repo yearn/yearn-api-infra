@@ -39,6 +39,7 @@ export class YearnAPIServicesStack extends Stack {
           REMOTE_WRITE_USERNAME: "",
           REMOTE_WRITE_PASSWORD: "",
           SENTRY_DSN: "",
+          ZAPPER_API_KEY: "",
         }),
         // This is a require property, but we won't actually use it.
         generateStringKey: "_",
