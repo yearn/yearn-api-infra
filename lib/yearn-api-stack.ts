@@ -82,6 +82,10 @@ export class YearnAPIECSStack extends Stack {
               servicesStack.secretsManager,
               "SENTRY_DSN"
             ),
+            ZAPPER_API_KEY: ecs.Secret.fromSecretsManager(
+              servicesStack.secretsManager,
+              "ZAPPER_API_KEY"
+            ),
           },
         },
       }
@@ -114,10 +118,6 @@ export class YearnAPIECSStack extends Stack {
         REMOTE_WRITE_PASSWORD: ecs.Secret.fromSecretsManager(
           servicesStack.secretsManager,
           "REMOTE_WRITE_PASSWORD"
-        ),
-        ZAPPER_API_KEY: ecs.Secret.fromSecretsManager(
-          servicesStack.secretsManager,
-          "ZAPPER_API_KEY"
         ),
       },
     }
